@@ -65,28 +65,14 @@ jobs:
       - name: Push node-mini image
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
         
-      # - name: "Scan tomcat image with grype"
-      #   uses: anchore/scan-action@v6
-      #   with:
-      #     image: '${{ env.GAR_LOCATION }}tomcat/tomcat-library:latest'
-      #     fail-build: false
-      #     output-format: 'table'
-      #     severity-cutoff: 'low'
-      #     by-cve: true
-      #     only-fixed: false
-      #
-      - name: Scan tomcat image
+      - name: Scan node image
         uses: aquasecurity/trivy-action@0.31.0
         if: always()
         with:
           image-ref: '${{ env.GAR_LOCATION }}node/node-library:latest'
           format: 'table'
 
-      # - name: "Scan tomcat-mini image with grype"
-      #   run: |
-      #     ./grype ${{ env.GAR_LOCATION }}tomcat/tomcat-mini:latest
-      #
-      - name: Scan tomcat-mini image
+      - name: Scan node-mini image
         uses: aquasecurity/trivy-action@0.31.0
         if: always()
         with:
