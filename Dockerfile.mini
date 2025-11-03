@@ -1,0 +1,50 @@
+FROM reg.mini.dev/node-fips:24-dev AS base
+
+WORKDIR /app
+
+ARG NPM_REGISTRY=https://npm.lab.mini.dev/
+
+# Become root just for bake steps
+USER 0
+
+RUN printf "registry=%s\n" "${NPM_REGISTRY}" > /etc/npmrc && chmod 0644 /etc/npmrc
+ENV NPM_CONFIG_REGISTRY=${NPM_REGISTRY}
+
+RUN mkdir -p /home/node/.npm && chown -R 1000:1000 /home/node
+
+# Drop back to the image’s normal user
+USER node
+
+# Copy package files and install dependencies as root
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+
+# Copy rest of the app
+COPY . .
+
+FROM base AS linter
+
+WORKDIR /app
+
+RUN npm run lint
+
+FROM reg.mini.dev/14/node-fips-app-base:24
+
+WORKDIR /app
+
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/package.json ./package.json
+COPY --from=base /app/. .
+
+USER 0 
+# Create app user and group
+RUN addgroup app && adduser -S -G app app
+
+# No need to install dependencies, they're baked in the image.
+
+# Switch to non-root user for runtime
+USER app
+
+EXPOSE 3000
+CMD ["node", "app.js"]
