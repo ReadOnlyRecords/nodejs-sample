@@ -21,7 +21,7 @@ RUN npm ci --omit=dev
 
 
 # Copy rest of the app
-COPY . .
+COPY code/. .
 
 FROM base AS linter
 

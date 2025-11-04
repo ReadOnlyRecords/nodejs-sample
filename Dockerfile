@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # Copy rest of the app
-COPY . .
+COPY code/. .
 
 FROM base AS linter
 
