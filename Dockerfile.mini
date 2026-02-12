@@ -30,7 +30,7 @@ WORKDIR /app
 
 RUN npm run lint
 
-FROM reg.mini.dev/14/node-fips-app-base:24
+FROM reg.mini.dev/14/node-fips-app-base-fb:24
 
 WORKDIR /app
 
