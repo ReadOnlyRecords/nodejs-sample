@@ -1,6 +1,8 @@
 FROM registry.redhat.io/ubi10/nodejs-22:10.1 AS base
 
 WORKDIR /app
+# Run as root for build
+USER 0
 
 # Copy package files and install dependencies as root
 COPY package*.json ./
