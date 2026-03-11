@@ -28,14 +28,14 @@ COPY --from=base /app/. .
 # Run as root for these steps
 USER 0
 
-RUN microdnf install shadow-utils
+RUN dnf install shadow-utils
 # Create app user and group
 RUN addgroup app && adduser -system --ingroup app app
 RUN groupadd -r -g 1000 app \
   && useradd -r -u 1000 -g app app
 
 # Install dependencies
-RUN microdnf install ca-certificates curl 
+RUN dnf install ca-certificates curl 
 
 # Switch to non-root user for runtime
 USER app
