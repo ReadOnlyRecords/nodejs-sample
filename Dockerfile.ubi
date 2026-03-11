@@ -30,7 +30,7 @@ USER 0
 
 RUN dnf install shadow-utils
 # Create app user and group
-RUN addgroup app && adduser -system --ingroup app app
+
 RUN groupadd -r -g 1000 app \
   && useradd -r -u 1000 -g app app
 
