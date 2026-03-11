@@ -69,14 +69,14 @@ jobs:
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
         
       - name: Scan node image
-        uses: aquasecurity/trivy-action@0.31.0
+        uses: aquasecurity/trivy-action@0.35.0
         if: always()
         with:
           image-ref: '${{ env.GAR_LOCATION }}node/node-ubi:latest'
           format: 'table'
 
       - name: Scan node-mini image
-        uses: aquasecurity/trivy-action@0.31.0
+        uses: aquasecurity/trivy-action@0.35.0
         if: always()
         with:
           image-ref: '${{ env.GAR_LOCATION }}node/node-mini:latest'
