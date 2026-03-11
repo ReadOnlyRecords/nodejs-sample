@@ -37,7 +37,7 @@ jobs:
         run: "gcloud info"
 
       - name: "Red Hat registry auth"
-        run: docker login -u ${{ secrets.RH_USER }} -p ${{ secrets.RH_PASSWORD }} registry.redhat.io
+        run: docker login -u ${{ secrets.RH_USERNAME }} -p ${{ secrets.RH_PASSWORD }} registry.redhat.io
 
       - name: "Minimus registry auth"
         run: docker login -u minimus -p ${{ secrets.MINIMUS_TOKEN }} reg.mini.dev
