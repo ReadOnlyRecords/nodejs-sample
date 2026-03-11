@@ -36,6 +36,9 @@ jobs:
       - name: "Use gcloud CLI"
         run: "gcloud info"
 
+      - name: "Red Hat registry auth"
+        run: docker login -u ${{ secrets.RH_USER }} -p ${{ secrets.RH_PASSWORD }} registry.redhat.io
+
       - name: "Minimus registry auth"
         run: docker login -u minimus -p ${{ secrets.MINIMUS_TOKEN }} reg.mini.dev
 
@@ -52,15 +55,15 @@ jobs:
         
 
            
-      - name: Build node image
-        run: podman build -t ${{ env.GAR_LOCATION }}node/node-library:latest .
+      - name: Build UBI ode image
+        run: podman build -t ${{ env.GAR_LOCATION }}node/node-ubi:latest -f Dockerfile.ubi .
 
       - name: Build node-mini image
         run: podman build -t ${{ env.GAR_LOCATION }}node/node-mini:latest -f Dockerfile.mini .  
         
 
       - name: Push node image
-        run: podman push ${{ env.GAR_LOCATION }}node/node-library:latest
+        run: podman push ${{ env.GAR_LOCATION }}node/node-ubi:latest
 
       - name: Push node-mini image
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
@@ -69,7 +72,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.31.0
         if: always()
         with:
-          image-ref: '${{ env.GAR_LOCATION }}node/node-library:latest'
+          image-ref: '${{ env.GAR_LOCATION }}node/node-ubi:latest'
           format: 'table'
 
       - name: Scan node-mini image
@@ -86,6 +89,6 @@ jobs:
         with:
           command: compare
           image: ${{ env.GAR_LOCATION }}node/node-mini:latest
-          to: ${{ env.GAR_LOCATION }}node/node-library:latest
+          to: ${{ env.GAR_LOCATION }}node/node-ubi:latest
           ignore-unchanged: true
           format: markdown
