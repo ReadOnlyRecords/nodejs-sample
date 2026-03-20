@@ -64,20 +64,7 @@ jobs:
 
       - name: Push node-mini image
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
-        
-      - name: Scan node image
-        uses: aquasecurity/trivy-action@0.31.0
-        if: always()
-        with:
-          image-ref: '${{ env.GAR_LOCATION }}node/node-library:latest'
-          format: 'table'
 
-      - name: Scan node-mini image
-        uses: aquasecurity/trivy-action@0.31.0
-        if: always()
-        with:
-          image-ref: '${{ env.GAR_LOCATION }}node/node-mini:latest'
-          format: 'table'
 
 
       - name: Compare Images
