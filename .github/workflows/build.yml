@@ -66,13 +66,24 @@ jobs:
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
 
 
-
-      - name: Compare Images
-        id: docker-scout
-        uses: docker/scout-action@v1
+      - name: "Scan tomcat image with grype"
+        uses: anchore/scan-action@v6
         with:
-          command: compare
-          image: ${{ env.GAR_LOCATION }}node/node-mini:latest
-          to: ${{ env.GAR_LOCATION }}node/node-library:latest
-          ignore-unchanged: true
-          format: markdown
+          image: '${{ env.GAR_LOCATION }}node/node-library:latest'
+          fail-build: false
+          output-format: 'table'
+          severity-cutoff: 'low'
+          by-cve: true
+          only-fixed: false
+      
+
+
+      - name: "Scan tomcat-mini image with grype"
+        uses: anchore/scan-action@v6
+        with:
+          image: '${{ env.GAR_LOCATION }}node/node-mini:latest'
+          fail-build: false
+          output-format: 'table'
+          severity-cutoff: 'low'
+          by-cve: true
+          only-fixed: false
