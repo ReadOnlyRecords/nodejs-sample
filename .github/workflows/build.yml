@@ -18,8 +18,10 @@ jobs:
   build-push-artifact:
     runs-on: ubuntu-latest
     steps:
-      - name: Print dispatch body
-        run: echo "The message is ${{ github.event.client_payload.message }}" 
+      - name: Dump GitHub Event
+        env:
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$EVENT_CONTEXT"
         
       - name: "Checkout"
         uses: "actions/checkout@v3"
