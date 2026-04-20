@@ -18,7 +18,9 @@ jobs:
   build-push-artifact:
     runs-on: ubuntu-latest
     steps:
-
+      - name: Print dispatch body
+        run: echo "The message is ${{ github.event.client_payload.message }}" 
+        
       - name: "Checkout"
         uses: "actions/checkout@v3"
         
