@@ -41,7 +41,7 @@ jobs:
         run: "gcloud info"
 
       - name: "Minimus registry auth"
-        run: docker login -u minimus -p ${{ secrets.MINIMUS_TOKEN }} reg.mini.dev
+        run: docker login -u minimus -p ${{ secrets.MINIMUS_TOKEN }} reg.stage.mini.dev
 
       - name: "GAR auth"
         run: |-
