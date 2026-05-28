@@ -4,9 +4,7 @@ WORKDIR /app
 
 ARG NPM_CONFIG_REGISTRY="https://58-node.supplychain.stage.mini.dev" 
 
-# Become root just for bake steps
-USER 0
-
+RUN npm cache clean --force
 
 # Drop back to the image’s normal user
 USER node
