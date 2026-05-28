@@ -26,7 +26,7 @@ WORKDIR /app
 
 RUN npm run lint
 
-FROM reg.mini.dev/node-fips:24
+FROM reg.stage.mini.dev/node:24
 
 WORKDIR /app
 
