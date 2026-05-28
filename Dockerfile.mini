@@ -2,7 +2,7 @@ FROM reg.mini.dev/node-fips:24-dev AS base
 
 WORKDIR /app
 
-ARG NPM_REGISTRY=https://npm.mini.dev/
+ARG NPM_CONFIG_REGISTRY="https://58-node.supplychain.stage.mini.dev" 
 
 # Become root just for bake steps
 USER 0
