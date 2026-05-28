@@ -1,4 +1,4 @@
-FROM reg.mini.dev/node-fips:24-dev AS base
+FROM reg.stage.mini.dev/node:24-dev AS base
 
 WORKDIR /app
 
@@ -7,10 +7,6 @@ ARG NPM_CONFIG_REGISTRY="https://58-node.supplychain.stage.mini.dev"
 # Become root just for bake steps
 USER 0
 
-RUN printf "registry=%s\n" "${NPM_REGISTRY}" > /etc/npmrc && chmod 0644 /etc/npmrc
-ENV NPM_CONFIG_REGISTRY=${NPM_REGISTRY}
-
-RUN mkdir -p /home/node/.npm && chown -R 1000:1000 /home/node
 
 # Drop back to the image’s normal user
 USER node
