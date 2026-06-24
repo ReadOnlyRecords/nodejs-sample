@@ -70,7 +70,7 @@ jobs:
         run: podman push ${{ env.GAR_LOCATION }}node/node-mini:latest
 
 
-      - name: "Scan tomcat image with grype"
+      - name: "Scan node-library image with grype"
         uses: anchore/scan-action@v6
         with:
           image: '${{ env.GAR_LOCATION }}node/node-library:latest'
@@ -82,7 +82,7 @@ jobs:
       
 
 
-      - name: "Scan tomcat-mini image with grype"
+      - name: "Scan node-mini image with grype"
         uses: anchore/scan-action@v6
         with:
           image: '${{ env.GAR_LOCATION }}node/node-mini:latest'
